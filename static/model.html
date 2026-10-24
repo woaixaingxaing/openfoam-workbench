@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OpenFOAM 工作台 · 模型设置</title>
+<link rel="stylesheet" href="/model.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-case" viewBox="0 0 24 24"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 7.5 12 12l8-4.5M12 12v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-general" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3M5.6 5.6l2.1 2.1m8.6 8.6 2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+  <symbol id="i-physics" viewBox="0 0 24 24"><path d="M4 15c3-6 5 6 8 0s5 6 8 0" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M4 8c3-6 5 6 8 0s5 6 8 0" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".55"/></symbol>
+  <symbol id="i-fluid" viewBox="0 0 24 24"><path d="M12 3s6 6.4 6 10.4a6 6 0 0 1-12 0C6 9.4 12 3 12 3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.2 14.2c.6 1.3 1.6 2 3 2.1" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-mesh" viewBox="0 0 24 24"><path d="M4 6h16v12H4zM4 10h16M4 14h16M8 6v12M12 6v12M16 6v12" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-initial" viewBox="0 0 24 24"><path d="M5 19V5m0 14h14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M8 16c2.5 0 3.5-8 6-8s2.5 4 5 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+  <symbol id="i-boundary" viewBox="0 0 24 24"><path d="M4 5h16v14H4z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4 9h16" fill="none" stroke="currentColor" stroke-width="2.2" opacity=".8"/><path d="M8 4v5m8-5v5" fill="none" stroke="currentColor" stroke-width="1.6"/></symbol>
+  <symbol id="i-numerics" viewBox="0 0 24 24"><path d="M5 7h14M5 12h14M5 17h14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="8" cy="7" r="1.7" fill="currentColor"/><circle cx="15" cy="12" r="1.7" fill="currentColor"/><circle cx="10" cy="17" r="1.7" fill="currentColor"/></symbol>
+  <symbol id="i-output" viewBox="0 0 24 24"><path d="M5 4h10l4 4v12H5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 13h6M9 16h4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M15 4v4h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-run" viewBox="0 0 24 24"><path d="M8 5.4v13.2L19 12z" fill="currentColor"/></symbol>
+  <symbol id="i-dict" viewBox="0 0 24 24"><path d="M5 4h9l5 5v11H5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 11h8M8 14h8M8 17h5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-save" viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 4v6h7V4M8 20v-6h8v6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.4v13.2L19 12z" fill="currentColor"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6.5" y="6.5" width="11" height="11" rx="2" fill="currentColor"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><path d="M4 6h16v12H4zM4 10h16M4 14h16M8 6v12M12 6v12M16 6v12" fill="none" stroke="currentColor" stroke-width="1.4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3.5 6.5h6l2 2h9v10.5a1.5 1.5 0 0 1-1.5 1.5H5a1.5 1.5 0 0 1-1.5-1.5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11.5a8 8 0 1 0-2.4 6M20 5v6.5h-6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M8 10l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+  <symbol id="i-cube" viewBox="0 0 24 24"><path d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M4 7.5 12 12l8-4.5M12 12v9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+  <symbol id="i-fit" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-warning" viewBox="0 0 24 24"><path d="M12 4 21 20H3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 9v5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="17" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 11v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="7.8" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3.2 20 6v5.6c0 4.5-3.2 7.7-8 9.2-4.8-1.5-8-4.7-8-9.2V6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M8.4 12.1l2.4 2.4 4.7-4.7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s6.5-6.1 6.5-11A6.5 6.5 0 0 0 5.5 10c0 4.9 6.5 11 6.5 11z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+</svg>
+
+<header class="appbar">
+  <div class="brand">
+    <div class="brand-mark"><svg viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#a1a1a6"/></linearGradient></defs><path d="M24 7c9.4 0 17 7.6 17 17S33.4 41 24 41 7 33.4 7 24c0-11.5 13.5-18 24.5-11.6 6.3 3.7 6.4 11.3.6 14.2-5.1 2.5-10.4-1.8-9.2-7.1.9-3.9 5-5.6 8.3-3.3" fill="none" stroke="url(#lg)" stroke-width="2.6" stroke-linecap="round"/></svg></div>
+    <div class="brand-text">
+      <div class="brand-title">OpenFOAM <b>工作台</b></div>
+      <div class="brand-sub">模型设置 · Model Setup</div>
+    </div>
+  </div>
+  <nav class="menu" aria-label="主菜单">
+    <button data-menu="file">文件</button>
+    <button data-menu="edit">编辑</button>
+    <button data-menu="view">视图</button>
+    <button data-menu="model">模型</button>
+    <button data-menu="run">运行</button>
+    <button data-menu="help">帮助</button>
+  </nav>
+  <div class="appbar-right">
+    <label class="case-picker"><span>算例</span><select id="caseSelect"></select></label>
+    <a class="top-link" href="/" title="打开运行监控与后处理"><svg class="ic"><use href="#i-grid"/></svg><span>运行监控</span></a>
+    <button class="top-icon" id="refreshAll" title="刷新算例与设置"><svg class="ic"><use href="#i-refresh"/></svg></button>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="tool-group">
+    <button class="tool" id="newCaseBtn"><svg class="ic"><use href="#i-plus"/></svg><span>新建算例</span></button>
+    <button class="tool" id="saveBtn"><svg class="ic"><use href="#i-save"/></svg><span>保存设置</span></button>
+  </div>
+  <div class="tool-sep"></div>
+  <div class="tool-group">
+    <button class="tool" id="blockMeshBtn"><svg class="ic"><use href="#i-grid"/></svg><span>生成网格</span></button>
+    <button class="tool" id="checkMeshBtn"><svg class="ic"><use href="#i-check"/></svg><span>检查网格</span></button>
+    <button class="tool health-tool" id="preflightBtn" title="运行前检查设置是否完整"><svg class="ic"><use href="#i-shield"/></svg><span>设置体检</span><span class="health-badge" id="healthBadge">—</span></button>
+  </div>
+  <div class="tool-sep"></div>
+  <div class="tool-group">
+    <button class="tool primary" id="runBtn"><svg class="ic"><use href="#i-play"/></svg><span>启动计算</span></button>
+    <button class="tool danger" id="stopBtn" disabled><svg class="ic"><use href="#i-stop"/></svg><span>停止</span></button>
+  </div>
+  <div class="tool-sep"></div>
+  <div class="tool-group">
+    <button class="tool" id="paraviewBtn"><svg class="ic"><use href="#i-cube"/></svg><span>ParaView</span></button>
+    <button class="tool" id="folderBtn"><svg class="ic"><use href="#i-folder"/></svg><span>打开目录</span></button>
+  </div>
+  <div class="toolbar-spacer"></div>
+  <div class="run-badge" id="runBadge"><span class="dot"></span><b id="runState">读取中</b><span id="runMeta"></span></div>
+</div>
+
+<div class="workspace">
+  <aside class="tree-panel">
+    <div class="panel-head">
+      <div><h2>模型树</h2><span id="treeCase">未选择算例</span></div>
+      <button class="mini-btn" id="treeRefresh" title="刷新"><svg class="ic"><use href="#i-refresh"/></svg></button>
+    </div>
+    <div class="tree" id="tree"></div>
+    <div class="tree-foot">
+      <div class="solver-chip" id="solverChip">—</div>
+      <div class="tree-path" id="treePath">—</div>
+    </div>
+  </aside>
+
+  <main class="viewport-panel">
+    <div class="viewport-head">
+      <div class="vp-title"><svg class="ic"><use href="#i-cube"/></svg><b>3D 视图</b><span id="viewSub">几何与网格</span></div>
+      <div class="vp-tools">
+        <button class="mini-btn" id="viewFit" title="适应窗口"><svg class="ic"><use href="#i-fit"/></svg></button>
+        <button class="mini-btn" id="viewReset" title="复位视角"><svg class="ic"><use href="#i-refresh"/></svg></button>
+      </div>
+    </div>
+    <div class="canvas-wrap" id="canvasWrap">
+      <canvas id="view"></canvas>
+      <div class="vp-badge" id="vpBadge">—</div>
+      <div class="vp-legend" id="vpLegend"></div>
+      <div class="vp-hint">拖动旋转 · 滚轮缩放 · 单击边界查看设置 · 双击复位</div>
+      <div class="vp-empty" id="vpEmpty" hidden>
+        <svg class="ic"><use href="#i-warning"/></svg>
+        <b>没有可显示的 blockMesh 几何</b>
+        <span>该算例可能使用 snappyHexMesh 或外部网格；可查看网格统计或在 ParaView 中打开。</span>
+      </div>
+    </div>
+    <div class="viewport-foot">
+      <div class="stat"><span>边界</span><b id="statPatches">—</b></div>
+      <div class="stat"><span>单元</span><b id="statCells">—</b></div>
+      <div class="stat"><span>块</span><b id="statBlocks">—</b></div>
+      <div class="stat"><span>范围</span><b id="statBounds">—</b></div>
+    </div>
+  </main>
+
+  <aside class="props-panel">
+    <div class="props-head">
+      <div><h2 id="propsTitle">通用</h2><span id="propsSub">算例与时间控制</span></div>
+      <span class="dirty-badge" id="dirtyBadge" hidden>未保存</span>
+    </div>
+    <div class="props-body" id="propsBody"></div>
+    <div class="props-foot">
+      <button class="btn-apply" id="applyBtn">应用当前设置</button>
+      <button class="btn-revert" id="revertBtn">还原</button>
+    </div>
+  </aside>
+</div>
+
+<footer class="statusbar">
+  <div class="status-left"><span class="status-dot" id="statusDot"></span><span id="statusText">正在连接本地服务…</span></div>
+  <div class="status-right"><span id="statusWarn"></span><span id="statusClock"></span></div>
+</footer>
+
+<div class="modal-root" id="modalRoot" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal" id="modalBox" role="dialog" aria-modal="true"></div>
+</div>
+<div class="toasts" id="toasts"></div>
+<script src="/model.js"></script>
+</body>
+</html>

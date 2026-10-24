@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Runtime data
+*.log
+*.bak
+*.tmp
+*.pid
+render-*.png
+gui_*.png
+
+# Local cases (if cloned next to the workbench)
+cases/

@@ -1,0 +1,21 @@
+[Unit]
+Description=OpenFOAM Workbench GUI
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Group=ubuntu
+WorkingDirectory=/home/ubuntu/OpenFOAM/gui
+ExecStart=/usr/bin/python3 /home/ubuntu/OpenFOAM/gui/openfoam_gui.py
+Restart=on-failure
+RestartSec=3
+Environment=PYTHONUNBUFFERED=1
+Environment=LANG=C.UTF-8
+Environment=DISPLAY=:0
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Environment=WAYLAND_DISPLAY=wayland-0
+Environment=PULSE_SERVER=unix:/mnt/wslg/PulseServer
+
+[Install]
+WantedBy=multi-user.target
