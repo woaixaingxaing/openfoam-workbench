@@ -270,6 +270,7 @@
     const mem = env.memAvail !== null && env.memAvail !== undefined ? `可用内存 ${fmtNum(env.memAvail, 1)} GB` : "";
     el("envLine").textContent = `OpenFOAM v${version} · WSL2 · ${cores}${env.paraview === false ? " · ParaView 不可用" : " · WSLg 图形界面就绪"}`;
     el("envChip").textContent = [cores, mem].filter(Boolean).join(" · ");
+    el("sideCaseRoot").textContent = env.caseRoot || "算例目录";
     el("sideUptime").textContent = env.uptime !== null && env.uptime !== undefined ? `服务运行 ${fmtDuration(env.uptime)} · 端口 8848` : "";
   }
 
@@ -386,7 +387,7 @@
         if (pick) {
           await selectCase(pick, { silent: true });
         } else {
-          showEmpty("还没有算例", "在 /home/ubuntu/OpenFOAM/mcp-cases 中创建算例后，点击“重新连接”。");
+          showEmpty("还没有算例", `在 ${state.env.caseRoot || "算例目录"} 中创建算例后，点击“重新连接”。`);
         }
       }
     } catch (err) {

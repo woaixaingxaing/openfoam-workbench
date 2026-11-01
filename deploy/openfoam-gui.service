@@ -6,8 +6,9 @@ After=network.target
 Type=simple
 User=ubuntu
 Group=ubuntu
-WorkingDirectory=/home/ubuntu/OpenFOAM/gui
-ExecStart=/usr/bin/python3 /home/ubuntu/OpenFOAM/gui/openfoam_gui.py
+# %h 会展开为 User= 指定用户的家目录；换用户名时只需改上面的 User/Group。
+WorkingDirectory=%h/OpenFOAM/gui
+ExecStart=/usr/bin/python3 %h/OpenFOAM/gui/openfoam_gui.py
 Restart=on-failure
 RestartSec=3
 Environment=PYTHONUNBUFFERED=1

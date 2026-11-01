@@ -24,12 +24,15 @@ from urllib.parse import parse_qs, unquote, urlparse
 
 import model_api
 
-BASE = Path("/home/ubuntu/OpenFOAM/mcp-cases")
-GUI_DIR = Path("/home/ubuntu/OpenFOAM/gui")
+DEFAULT_APP_HOME = Path.home() / "OpenFOAM"
+APP_HOME = Path(os.environ.get("OPENFOAM_WORKBENCH_HOME", DEFAULT_APP_HOME)).expanduser()
+BASE = Path(os.environ.get("OPENFOAM_WORKBENCH_CASES", APP_HOME / "mcp-cases")).expanduser()
+GUI_DIR = Path(__file__).resolve().parent
 STATIC_DIR = GUI_DIR / "static"
-FOAM_BASHRC = "/opt/openfoam14/etc/bashrc"
+FOAM_BASHRC = os.environ.get("OPENFOAM_BASHRC", "/opt/openfoam14/etc/bashrc")
 PV_RENDER = GUI_DIR / "_pv_render.py"
-PVPYTHON = "/usr/bin/pvpython"
+PVPYTHON = os.environ.get("OPENFOAM_PVPYTHON", "/usr/bin/pvpython")
+RUN_HOME = os.environ.get("OPENFOAM_WORKBENCH_RUN_HOME", os.environ.get("HOME", str(Path.home())))
 HOST, PORT = "0.0.0.0", 8848
 CASE_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$")
 SERVER_START = time.time()
@@ -135,7 +138,7 @@ def resolve_case(name):
 
 def bash_run(cmd, timeout=60, cwd=None, env=None):
     full_env = os.environ.copy()
-    full_env.update({"HOME": "/home/ubuntu", "LANG": "C.UTF-8"})
+    full_env.update({"HOME": RUN_HOME, "LANG": "C.UTF-8"})
     if env:
         full_env.update(env)
     return subprocess.run(
@@ -894,7 +897,7 @@ def do_render(jid, job):
         "out": str(out),
     }
     env = os.environ.copy()
-    env.update({"HOME": "/home/ubuntu", "LANG": "C.UTF-8"})
+    env.update({"HOME": RUN_HOME, "LANG": "C.UTF-8"})
     with RENDER_SEM:
         update_job(jid, message=f"ParaView 正在渲染 {field} @ t={time_value:g} s")
         proc_res = subprocess.run(
@@ -1100,7 +1103,7 @@ def start_case(name, ranks, start_from):
     else:
         run_cmd += "exec foamRun"
     env = os.environ.copy()
-    env.update({"HOME": "/home/ubuntu", "LANG": "C.UTF-8"})
+    env.update({"HOME": RUN_HOME, "LANG": "C.UTF-8"})
     header = f"# OpenFOAM Workbench start {now_iso()}  ranks={ranks}  startFrom={start_from}\n"
     with open(log, "ab") as fh:
         fh.write(header.encode("utf-8"))
@@ -1274,6 +1277,7 @@ def environment_info():
         "load": load,
         "pvpython": Path(PVPYTHON).exists(),
         "paraview": Path("/usr/bin/paraview").exists(),
+        "caseRoot": str(BASE),
         "uptime": round(time.time() - SERVER_START, 1),
         "_at": time.time(),
     })

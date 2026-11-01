@@ -115,19 +115,33 @@
 
 算例目录默认是 `/home/<user>/OpenFOAM/mcp-cases`。
 
-### 2. 修改路径
+### 2. 配置路径（可选）
 
-`openfoam_gui.py` 顶部集中定义了环境路径：
+`openfoam_gui.py` 默认按当前用户家目录查找：
 
-```python
-BASE = Path("/home/ubuntu/OpenFOAM/mcp-cases")   # 算例根目录
-GUI_DIR = Path("/home/ubuntu/OpenFOAM/gui")      # 本目录
-FOAM_BASHRC = "/opt/openfoam14/etc/bashrc"
-PVPYTHON = "/usr/bin/pvpython"
-HOST, PORT = "0.0.0.0", 8848
+```text
+$HOME/OpenFOAM/gui        # 程序目录（本仓库）
+$HOME/OpenFOAM/mcp-cases  # 算例根目录
 ```
 
-如果用户名或安装路径不同，修改这里。`model_api.py` 里的教程路径 `/opt/openfoam14/tutorials` 也需要按需调整。
+需要换位置时用环境变量，不必改代码：
+
+| 变量 | 默认值 | 作用 |
+| --- | --- | --- |
+| `OPENFOAM_WORKBENCH_HOME` | `$HOME/OpenFOAM` | 根目录 |
+| `OPENFOAM_WORKBENCH_CASES` | `$OPENFOAM_WORKBENCH_HOME/mcp-cases` | 算例根目录 |
+| `OPENFOAM_BASHRC` | `/opt/openfoam14/etc/bashrc` | OpenFOAM 环境脚本 |
+| `OPENFOAM_PVPYTHON` | `/usr/bin/pvpython` | ParaView Python |
+| `OPENFOAM_WORKBENCH_RUN_HOME` | `$HOME` | 子进程使用的 HOME |
+
+例如把算例放到别处：
+
+```bash
+export OPENFOAM_WORKBENCH_CASES=$HOME/cases
+python3 openfoam_gui.py
+```
+
+`GUI_DIR` 自动取 `openfoam_gui.py` 所在目录。`model_api.py` 里的教程路径 `/opt/openfoam14/tutorials` 仍需按安装位置调整。
 
 ### 3. 启动
 
@@ -140,7 +154,7 @@ python3 openfoam_gui.py
 
 ### 4. systemd（可选）
 
-仓库提供 [`deploy/openfoam-gui.service`](deploy/openfoam-gui.service) 作为示例。按实际用户名和路径修改后：
+仓库提供 [`deploy/openfoam-gui.service`](deploy/openfoam-gui.service) 作为示例。`WorkingDirectory` 和 `ExecStart` 使用 `%h` 自动取 `User=` 指定用户的家目录；用户名不同时改 `User` / `Group` 即可：
 
 ```bash
 sudo cp deploy/openfoam-gui.service /etc/systemd/system/
